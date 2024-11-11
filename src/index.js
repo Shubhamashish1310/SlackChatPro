@@ -1,10 +1,13 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
-import apiRoutes from './Routes/apiRoutes.js'
-import { PORT } from './Config/serverConfig.js';
+
 import connectDB from './Config/dbConfig.js';
+import { PORT } from './Config/serverConfig.js';
+import apiRoutes from './Routes/apiRoutes.js'
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
 
 app.use('/api', apiRoutes)
 app.get('/', (req, res) => {

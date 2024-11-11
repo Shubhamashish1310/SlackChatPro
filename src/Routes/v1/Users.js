@@ -1,7 +1,10 @@
 import express from 'express';
 
+import { signUp } from '../../Controllers/userController.js';
+
 const router = express.Router();
 
+router.post('/signup',signUp)
 
 router.get('/', (req, res) => {
     res.status(200).json({
