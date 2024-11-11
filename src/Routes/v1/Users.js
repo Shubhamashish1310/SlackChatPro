@@ -1,10 +1,12 @@
 import express from 'express';
 
 import { signUp } from '../../Controllers/userController.js';
+import { userSignUpSchema } from '../../Validation/zodUserValidation.js';
+import { validate } from '../../Validation/zodValidatior.js';
 
 const router = express.Router();
 
-router.post('/signup',signUp)
+router.post('/signup',validate(userSignUpSchema) ,signUp)
 
 router.get('/', (req, res) => {
     res.status(200).json({
