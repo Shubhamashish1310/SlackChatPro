@@ -6,12 +6,13 @@ import { createJWT } from "../Utils/Common/authUtils.js";
 import ClientError from "../Utils/Errors/clientError.js";
 import ValidationError from "../Utils/Errors/validationError.js";
 
-export const signUpService = async (data) => {
+export const signUpService = async (data) => {  //data = req.body
   try {
     const newUser = await userRepository.create(data);
-    return newUser;
+    return newUser;  //create the user
   } catch (error) {
     console.log('User service error', error);
+    //variety in error handling
     if (error.name === 'ValidationError') {
       throw new ValidationError(
         {
