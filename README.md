@@ -1,5 +1,5 @@
 <div align="center">
-    <img width="80" alt="Anime messaging" src="[./public/readmeImage.gif](https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/250389/Group.png)"/>
+    <img width="80" alt="Anime messaging" src="https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/250389/Group.png"/>
     <h1>Slack Clone</h1>
 </div>
 
@@ -70,14 +70,6 @@ A real-time Slack like collaborative platform for creating and managing workspac
 - **Queue Management**: `Bull`, `ioredis`
 - **Validation**: `Zod`
 - **Email Service**: `Nodemailer`
-
-## Live Link
- - [Live Website](https://slackapp-rho.vercel.app/workspaces)
--  [Backend Repository](https://github.com/ManikMaity/Message-Slack-Backend)
-
-## Preview Video
-[![Video Preview](./public/preview.jpg)](https://youtu.be/-6a_Yuq3I8w?si=AbryGDFOXBjS7zzM)
-
 
 
 ## Installation and Setup
