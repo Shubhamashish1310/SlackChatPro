@@ -14,6 +14,7 @@ A real-time Slack like collaborative platform for creating and managing workspac
 
 ## Features
 
+
 ### 🔐 User Management
 
 - Users can signup and login using their credentials with cookie-based authentication using JWT.
