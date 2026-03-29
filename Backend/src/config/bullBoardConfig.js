@@ -13,4 +13,5 @@ createBullBoard({
   serverAdapter: bullServerAdapter
 });
 
+
 export default bullServerAdapter;
