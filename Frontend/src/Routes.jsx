@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-
 import { ProtectedRoute } from '@/components/molecules/ProtectedRoute/ProtectedRoute';
 import { SigninContainer } from '@/components/organisms/Auth/SigninContainer';
 import { SignupContainer } from '@/components/organisms/Auth/SignupContainer';

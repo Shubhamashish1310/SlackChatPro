@@ -6,13 +6,9 @@ import { useFetchWorkspace } from '@/hooks/apis/workspaces/useFetchWorkspace';
 import { useCreateWorkspaceModal } from '@/hooks/context/useCreateWorkspaceModal';
 
 export const Home = () => {
-
     const { isFetching, workspaces } = useFetchWorkspace();
-
     const { setOpenCreateWorkspaceModal } = useCreateWorkspaceModal();
-
     const navigate = useNavigate();
-
     useEffect(() => {
 
         if(isFetching) return;
