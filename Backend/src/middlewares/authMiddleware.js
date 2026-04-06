@@ -8,6 +8,20 @@ import {
   internalErrorResponse
 } from '../utils/common/responseObjects.js';
 
+export const authenticateUser = (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'No token' });
+    
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.id;  // ← Extract userId from token
+    next();
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid token' },error);
+  }
+};
+
+
 export const isAuthenticated = async (req, res, next) => {
   try {
     const token = req.headers['x-access-token'];

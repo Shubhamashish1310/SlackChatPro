@@ -10,6 +10,7 @@ import { PORT } from './config/serverConfig.js';
 import ChannelSocketHandlers from './controllers/channelSocketController.js';
 import MessageSocketHandlers from './controllers/messageSocketController.js';
 import { verifyEmailController } from './controllers/workspaceController.js';
+import aiRoutes from './routes/aiRoutes.js';
 import apiRouter from './routes/apiRoutes.js';
 
 const app = express();
@@ -26,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/ui', bullServerAdapter.getRouter());
-
+app.use('/api/ai', aiRoutes);
 app.use('/api', apiRouter);
 
 app.get('/verify/:token', verifyEmailController);
