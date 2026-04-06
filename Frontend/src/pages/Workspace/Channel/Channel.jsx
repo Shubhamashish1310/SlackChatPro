@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Loader2Icon, TriangleAlertIcon } from 'lucide-react';
-import { useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ChannelHeader } from '@/components/molecules/Channel/ChannelHeader';
@@ -14,20 +14,17 @@ import { useSocket } from '@/hooks/context/useSocket';
 export const Channel = () => {
 
     const { channelId } = useParams();
-
     const queryClient = useQueryClient();
 
     const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
     const { setMessageList, messageList } = useChannelMessages();
-
     const { joinChannel } = useSocket();
-
     const { messages, isSuccess } = useGetChannelMessages(channelId);
 
     const messageContainerListRef = useRef(null);
 
     useEffect(() => {
-        if(messageContainerListRef.current) {
+        if (messageContainerListRef.current) {
             messageContainerListRef.current.scrollTop = messageContainerListRef.current.scrollHeight;
         }
     }, [messageList]);
@@ -38,31 +35,27 @@ export const Channel = () => {
     }, [channelId]);
 
     useEffect(() => {
-        if(!isFetching && !isError) {
-            
+        if (!isFetching && !isError) {
             joinChannel(channelId);
-
         }
     }, [isFetching, isError, joinChannel, channelId]);
 
     useEffect(() => {
-        if(isSuccess ) {
+        if (isSuccess && messages?.length) {
             console.log('Channel Messages fetched');
-            setMessageList(messages.reverse());
+            setMessageList([...messages].reverse()); // ✅ Fix 1: spread to avoid mutating original
         }
-    }, [isSuccess, messages, setMessageList, channelId]);
+    }, [isSuccess, channelId]); // ✅ Fix 2: removed `messages` dep to prevent reset on socket updates
 
-    if(isFetching) {
+    if (isFetching) {
         return (
-            <div
-                className='h-full flex-1 flex items-center justify-center'
-            >
+            <div className='h-full flex-1 flex items-center justify-center'>
                 <Loader2Icon className='size-5 animate-spin text-muted-foreground' />
             </div>
         );
     }
 
-    if(isError) {
+    if (isError) {
         return (
             <div className='h-full flex-1 flex flex-col gap-y-2 items-center justify-center'>
                 <TriangleAlertIcon className='size-6 text-muted-foreground' />
@@ -75,18 +68,25 @@ export const Channel = () => {
         <div className='flex flex-col h-full'>
             <ChannelHeader name={channelDetails?.name} />
 
-            {/* We need to make sure that below div is scrollable for the messages */}
             <div
                 ref={messageContainerListRef}
                 className='flex-5 overflow-y-auto p-5 gap-y-2'
+                style={{ overflowAnchor: 'auto' }} // ✅ Fix 3: prevents scroll jump on AI panel toggle
             >
-                {messageList?.map((message) => {
-                    return <Message key={message._id} body={message.body} authorImage={message.senderId?.avatar} authorName={message.senderId?.username} createdAt={message.createdAt} image={message.image}   />;
-                })}   
-            </div>         
+                {messageList?.map((message) => (
+                    <Message
+                        key={message._id}
+                        messageId={message._id}
+                        body={message.body}
+                        authorImage={message.senderId?.avatar}
+                        authorName={message.senderId?.username}
+                        createdAt={message.createdAt}
+                        image={message.image}
+                    />
+                ))}
+            </div>
 
-            
-            <div className='flex-1' /> 
+            <div className='flex-1' />
             <ChatInput />
         </div>
     );

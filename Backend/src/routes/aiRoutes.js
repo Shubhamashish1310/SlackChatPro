@@ -17,15 +17,10 @@ router.post('/analyze-message',authenticateUser, aiLimiter,  async (req, res) =>
   try {
     console.log('Received request for message analysis');
     const { messageContent } = req.body;
-    console.log('Received message for analysis:', messageContent);
-    console.log('Using API key:', process.env.GEMINI_API_KEY ? 'Yes' : 'No');
-    console.log(req.headers);
-    console.log(req.userId);
-    const userId = req.userId || 'unknown';
-    console.log(`User ID for rate limiting: ${userId}`);
     const response = await gemini.models.generateContent({
       model: "gemini-3-flash-preview",  // This is the actual model name!
-      contents: `Analyze: "${messageContent}"`
+      contents: `Analyze: "${messageContent} +"reply in least words as this is personal project and not for commercial use api integration of gemini 3 flash preview model"`,
+      maxOutputTokens: 100
     });
     
     // Send ONLY result to frontend, NOT API key
