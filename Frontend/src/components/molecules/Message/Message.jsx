@@ -22,7 +22,7 @@ export const Message = ({
         setAiLoading(true);
 
         try {
-            const response = await fetch('https://slackchatpro.onrender.com/api/ai/analyze-message', {
+            const response = await fetch('http://localhost:3000/api/ai/analyze-message', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
