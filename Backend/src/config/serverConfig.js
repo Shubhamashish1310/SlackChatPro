@@ -46,3 +46,4 @@ export const RECEIPT_SECRET = process.env.RECEIPT_SECRET || 'receipt_1103';
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 export const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+export const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:3000';

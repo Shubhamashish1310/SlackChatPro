@@ -4,14 +4,14 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
 import User from '../schema/user.js';
 // import { JWT_SECRET } from './serverConfig.js';
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './serverConfig.js';
+import { BACKEND_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './serverConfig.js';
 
 passport.use(
     new GoogleStrategy(
         {
             clientID: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: '/auth/google/callback'
+            callbackURL: `${BACKEND_URL}/auth/google/callback`
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
