@@ -9,16 +9,16 @@ export const Home = () => {
     const { isFetching, workspaces } = useFetchWorkspace();
     const { setOpenCreateWorkspaceModal } = useCreateWorkspaceModal();
     const navigate = useNavigate();
-    useEffect(() => {
 
-        if(isFetching) return;
+    useEffect(() => {
+        if (isFetching) return;
 
         console.log('Workspaces downloaded is', workspaces);
 
-        if(workspaces.length === 0 || !workspaces) {
+        // ✅ Check !workspaces FIRST before .length
+        if (!workspaces || workspaces.length === 0) {
             console.log('No workspaces found, creating one');
             setOpenCreateWorkspaceModal(true);
-
         } else {
             navigate(`/workspaces/${workspaces[0]._id}`);
         }
@@ -27,7 +27,7 @@ export const Home = () => {
 
     return (
         <>
-            <h1>Home</h1> 
+            <h1>Home</h1>
             <UserButton />
         </>
     );

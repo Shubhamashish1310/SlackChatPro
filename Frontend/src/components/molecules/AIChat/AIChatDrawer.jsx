@@ -1,5 +1,6 @@
-import { BotIcon, SendIcon, XIcon, SparklesIcon } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { BotIcon, SendIcon, SparklesIcon,XIcon } from 'lucide-react';
+import { useEffect,useRef, useState } from 'react';
+
 import { useAuth } from '@/hooks/context/useAuth';
 
 const SYSTEM_CONTEXT = `You are an AI assistant for SlackChatPro, a Slack-like team collaboration app. 

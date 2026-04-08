@@ -9,14 +9,13 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Email is required'],
       unique: [true, 'Email already exists'],
       match: [
-        // eslint-disable-next-line no-useless-escape
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         'Please fill a valid email address'
       ]
     },
     password: {
       type: String,
-      required: [true, 'Password is required']
+      required: false  // ✅ Changed — OAuth users have no password
     },
     username: {
       type: String,
@@ -31,6 +30,22 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String
     },
+
+    // ✅ Add these 3 new fields for OAuth
+    googleId: {
+      type: String,
+      default: null
+    },
+    githubId: {
+      type: String,
+      default: null
+    },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google', 'github'],
+      default: 'local'
+    },
+
     isVerified: {
       type: Boolean,
       default: false
@@ -48,12 +63,21 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', function saveUser(next) {
   if (this.isNew) {
     const user = this;
-    const SALT = bcrypt.genSaltSync(9);
-    const hashedPassword = bcrypt.hashSync(user.password, SALT);
-    user.password = hashedPassword;
+
+    // ✅ Only hash password if it exists (skip for OAuth users)
+    if (user.password) {
+      const SALT = bcrypt.genSaltSync(9);
+      const hashedPassword = bcrypt.hashSync(user.password, SALT);
+      user.password = hashedPassword;
+    }
+
     user.avatar = `https://robohash.org/${user.username}`;
-    user.verificationToken = uuidv4().substring(0, 10).toUpperCase();
-    user.verificationTokenExpiry = Date.now() + 3600000; // 1 hour
+
+    // ✅ Only set verification token for local users
+    if (user.authProvider === 'local') {
+      user.verificationToken = uuidv4().substring(0, 10).toUpperCase();
+      user.verificationTokenExpiry = Date.now() + 3600000;
+    }
   }
   next();
 });

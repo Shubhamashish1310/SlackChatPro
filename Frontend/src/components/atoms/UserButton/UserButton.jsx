@@ -10,10 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 export const UserButton = () => {
 
     const navigate = useNavigate();
-
     const { auth, logout } = useAuth();
     const { toast } = useToast();
-
     const { setOpenCreateWorkspaceModal } = useCreateWorkspaceModal();
 
     function openWorkspaceCreateModal() {
@@ -22,12 +20,8 @@ export const UserButton = () => {
 
     async function handleLogout() {
         await logout();
-        toast({
-            title: 'Successfully signed out',
-            type: 'success'
-        });
+        toast({ title: 'Successfully signed out', type: 'success' });
         navigate('/auth/signin');
-
     }
 
     return (
@@ -35,7 +29,10 @@ export const UserButton = () => {
             <DropdownMenuTrigger className='outline-none relative'>
                 <Avatar className='size-10 hover:opacity-65 transition'>
                     <AvatarImage src={auth?.user?.avatar} />
-                    <AvatarFallback>{auth?.user?.username[0].toUpperCase()}</AvatarFallback>
+                    {/* ✅ Optional chaining — won't crash if username is undefined */}
+                    <AvatarFallback>
+                        {auth?.user?.username?.[0]?.toUpperCase() ?? 'U'}
+                    </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -54,5 +51,4 @@ export const UserButton = () => {
             </DropdownMenuContent>
         </DropdownMenu>
     );
-    
 };

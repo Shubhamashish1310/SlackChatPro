@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import axiosConfig from '../../config/axiosConfig';
 
 export const uploadImageToAWSpresignedUrl = async ({ url, file }) => {
@@ -27,4 +28,4 @@ export const getPreginedUrl = async ({ token }) => {
     } catch (error) {
         console.log('Error in getting presigned url', error);
     }
-}
+};

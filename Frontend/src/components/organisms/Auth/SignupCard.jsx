@@ -7,10 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
-export const SignupCard = ({ 
-    signupForm, 
-    setSignupForm, 
-    validationError, 
+export const SignupCard = ({
+    signupForm,
+    setSignupForm,
+    validationError,
     onSignupFormSubmit,
     error,
     isPending,
@@ -18,6 +18,10 @@ export const SignupCard = ({
 }) => {
 
     const navigate = useNavigate();
+
+    const handleGoogleSignIn = () => {
+        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
+    };
 
     return (
         <Card classname="w-full h-full">
@@ -40,7 +44,7 @@ export const SignupCard = ({
                 )}
 
                 {isSuccess && (
-                    <div className='bg-primary/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-primary mb-5'>  
+                    <div className='bg-primary/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-primary mb-5'>
                         <FaCheck className='size-5' />
                         <p>
                             Successfully signed up. You will be redirected to the login page in a few seconds.
@@ -49,6 +53,7 @@ export const SignupCard = ({
                     </div>
                 )}
             </CardHeader>
+
             <CardContent>
                 <form className='space-y-3' onSubmit={onSignupFormSubmit}>
                     <Input
@@ -73,7 +78,7 @@ export const SignupCard = ({
                         onChange={(e) => setSignupForm({ ...signupForm, confirmPassword: e.target.value })}
                         value={signupForm.confirmPassword}
                         type="password"
-                        disabled={false}
+                        disabled={isPending}
                     />
                     <Input
                         placeholder="Your username"
@@ -83,7 +88,7 @@ export const SignupCard = ({
                         type="text"
                         disabled={isPending}
                     />
-                    <Button 
+                    <Button
                         disabled={isPending}
                         size="lg"
                         type="submit"
@@ -95,11 +100,25 @@ export const SignupCard = ({
 
                 <Separator className="my-5" />
 
-                <p
-                    className='text-s text-muted-foreground mt-4'
+                {/* ✅ Google button on signup too — creates account automatically */}
+                <button
+                    type='button'
+                    onClick={handleGoogleSignIn}
+                    className='flex items-center justify-center gap-3 w-full border border-gray-200 rounded-md px-4 py-2.5 hover:bg-gray-50 transition-colors text-sm font-medium mb-4'
                 >
-                    Already have an account ? {' '}
-                    <span 
+                    <img
+                        src="https://cdn.simpleicons.org/google"
+                        className='size-4'
+                        alt="Google"
+                        width={16}
+                        height={16}
+                    />
+                    Continue with Google
+                </button>
+
+                <p className='text-s text-muted-foreground mt-4'>
+                    Already have an account?{' '}
+                    <span
                         className='text-sky-600 hover:underline cursor-pointer'
                         onClick={() => navigate('/auth/signin')}
                     >

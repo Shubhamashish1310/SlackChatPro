@@ -1,6 +1,6 @@
-import { WorkspaceNavbar } from '@/components/organisms/Workspace/WorkspaceNavbar';
-import { WorkspacePanel } from '@/components/organisms/Workspace/WorkspacePanel';
-import { WorkspaceSidebar } from '@/components/organisms/Workspace/WorkspaceSidebar';
+import { WorkspaceNavbar } from '@/components/organisms/Modals/Workspace/WorkspaceNavbar';
+import { WorkspacePanel } from '@/components/organisms/Modals/Workspace/WorkspacePanel';
+import { WorkspaceSidebar } from '@/components/organisms/Modals/Workspace/WorkspaceSidebar';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 
 export const WorkspaceLayout = ({ children }) => {

@@ -1,6 +1,6 @@
+import { ArrowRight, Lock, MessageCircle,Send, Users, Zap } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Send, Users, Zap, Lock, MessageCircle } from 'lucide-react';
 
 function Welcome() {
   const navigate = useNavigate();
@@ -284,7 +284,7 @@ function Welcome() {
                 key={i}
                 className="group p-8 rounded-2xl border border-blue-500/20 hover:border-blue-500/60 bg-gradient-to-br from-slate-900/50 to-slate-800/50 hover:from-blue-500/10 hover:to-purple-500/10 transition-all duration-300 cursor-pointer"
               >
-                <div className={`text-5xl mb-4 group-hover:scale-110 transition-transform`}>{feature.icon}</div>
+                <div className={'text-5xl mb-4 group-hover:scale-110 transition-transform'}>{feature.icon}</div>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{feature.description}</p>
               </div>

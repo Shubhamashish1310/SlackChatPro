@@ -6,13 +6,14 @@ import { Server } from 'socket.io';
 
 import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
+import passport from './config/passportConfig.js';      
 import { PORT } from './config/serverConfig.js';
 import ChannelSocketHandlers from './controllers/channelSocketController.js';
 import MessageSocketHandlers from './controllers/messageSocketController.js';
 import { verifyEmailController } from './controllers/workspaceController.js';
 import aiRoutes from './routes/aiRoutes.js';
 import apiRouter from './routes/apiRoutes.js';
-
+import authRoutes from './routes/authRoutes.js';       
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -25,10 +26,12 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());   
 
 app.use('/ui', bullServerAdapter.getRouter());
 app.use('/api/ai', aiRoutes);
 app.use('/api', apiRouter);
+app.use('/auth', authRoutes); 
 
 app.get('/verify/:token', verifyEmailController);
 
