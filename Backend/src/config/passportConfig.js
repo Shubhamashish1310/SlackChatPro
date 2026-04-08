@@ -1,36 +1,29 @@
-// import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-
 import User from '../schema/user.js';
-// import { JWT_SECRET } from './serverConfig.js';
-import { BACKEND_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './serverConfig.js';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './serverConfig.js';
 
 passport.use(
     new GoogleStrategy(
         {
             clientID: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: `${BACKEND_URL}/auth/google/callback`
+            callbackURL: '/auth/google/callback',
+            proxy: true  // ✅ This fixes production/Render HTTPS proxy issues
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                // Check if user already exists by googleId
                 let user = await User.findOne({ googleId: profile.id });
 
                 if (!user) {
-                    // Check if email already registered locally
                     user = await User.findOne({ email: profile.emails[0].value });
 
                     if (user) {
-                        // Link Google to existing local account
                         user.googleId = profile.id;
                         user.authProvider = 'google';
                         user.isVerified = true;
                         await user.save();
                     } else {
-                        // Create brand new user
-                        // Generate unique username from Google display name
                         let username = profile.displayName.replace(/[^a-zA-Z0-9]/g, '');
                         const existingUsername = await User.findOne({ username });
                         if (existingUsername) {
