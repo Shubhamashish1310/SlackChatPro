@@ -43,7 +43,7 @@ export const isAuthenticated = async (req, res, next) => {
         }
 
         // ✅ Fixed: _id instead of id (matches JWT sign payload)
-        const user = await userRepository.getById(response._id);
+        const user = await userRepository.getById(response._id || response.id);
 
         // ✅ Fixed: null check before accessing .id
         if (!user) {

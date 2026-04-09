@@ -101,7 +101,7 @@ export const signInService = async (data) => {
       avatar: user.avatar,
       email: user.email,
       _id: user._id,
-      token: createJWT({ id: user._id, email: user.email })
+      token: createJWT({ _id: user._id, email: user.email })
     };
   } catch (error) {
     console.log('User service error', error);

@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+
 import User from '../schema/user.js';
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './serverConfig.js';
 
